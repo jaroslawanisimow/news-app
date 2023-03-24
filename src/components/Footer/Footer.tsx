@@ -1,15 +1,8 @@
-import React from 'react';
-import s from './styles.module.css';
+import React from "react";
+import s from "./styles.module.css";
 
-type Props = {
-  title: string;
-}
+type Props = {};
 
 export const Footer: React.FC<Props> = () => {
-  return (
-    <div className={s.footer}>
-
-    </div>
-  );
+  return <div className={s.footer}></div>;
 };
-
