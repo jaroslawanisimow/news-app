@@ -16,7 +16,7 @@ import styles from "./style.module.css";
 export default function Header() {
   const [badgeCount, setBadgeCount] = React.useState(1);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const [isGridViewVisible, setIsGridViewVisible] = React.useState(true);
+  const [isGrid, setIsGrid] = React.useState(true);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -26,7 +26,7 @@ export default function Header() {
   };
 
   const toggleIcons = () => {
-    setIsGridViewVisible(!isGridViewVisible);
+    setIsGrid(!isGrid);
   };
 
   return (
@@ -43,7 +43,7 @@ export default function Header() {
               NewsApp.tsx
             </Typography>
           </Link>
-          {isGridViewVisible ? (
+          {isGrid ? (
             <IconButton
               size="large"
               edge="start"
@@ -68,16 +68,6 @@ export default function Header() {
               <UnfoldMoreIcon />
             </IconButton>
           )}
-          {/* <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 5 }}
-          >
-            <GridViewIcon />
-            <FormatListBulletedIcon />
-          </IconButton> */}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: "block" }}>
             <IconButton
