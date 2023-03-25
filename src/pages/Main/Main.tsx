@@ -7,6 +7,7 @@ import { Body } from "../../components/Body/Body";
 import { Footer } from "../../components/Footer/Footer";
 
 type Props = {
+  
 };
 
 export const Main: React.FC<Props> = () => {
@@ -15,7 +16,7 @@ export const Main: React.FC<Props> = () => {
       <Header />
       <SideMenu />
       <Body />
-      <Footer />
+      <Footer number={123}/>
     </div>
   );
 };

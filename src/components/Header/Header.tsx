@@ -9,9 +9,10 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import GridViewIcon from "@mui/icons-material/GridView";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
+import TranslateIcon from "@mui/icons-material/Translate";
 import { Modal } from "antd";
 import { Link } from "react-router-dom";
-import styles from "./style.module.css";
+import styles from "./styles.module.css";
 
 export default function Header() {
   const [badgeCount, setBadgeCount] = React.useState(1);
@@ -69,7 +70,7 @@ export default function Header() {
             </IconButton>
           )}
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: "block" }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: "25px" }}>
             <IconButton
               size="large"
               edge="end"
@@ -84,6 +85,15 @@ export default function Header() {
               <Badge badgeContent={badgeCount} color="error">
                 <NotificationsIcon />
               </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-haspopup="true"
+              color="inherit"
+            >
+              <TranslateIcon />
             </IconButton>
           </Box>
         </Toolbar>
