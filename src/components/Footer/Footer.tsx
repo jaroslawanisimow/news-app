@@ -12,7 +12,7 @@ export const Footer: React.FC<Props> = ({ number }) => {
     const intervalId = setInterval(() => {
       setTime(new Date());
     }, 1000);
-
+ 
     return () => {
       clearInterval(intervalId);
     };
@@ -21,7 +21,7 @@ export const Footer: React.FC<Props> = ({ number }) => {
   return (
     <div className={styles.footer}>
       <div className={styles.time}>{isTime.toLocaleTimeString()}</div>
-      <div className={styles.number}> Articles on the page : {number}</div>
+      <div className={styles.number}> News on the page : {number}</div>
     </div>
   );
 };
