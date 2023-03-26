@@ -4,22 +4,25 @@ import styles from "./styles.module.css";
 import Header from "../../components/Header/Header";
 import { Body } from "../../components/Body/Body";
 import { Footer } from "../../components/Footer/Footer";
+import { useParams } from "react-router-dom";
+import { load } from "../../articleSlice";
 
-type Props = {
-  country: string;
-};
+import { useDispatch } from "react-redux";
 
-export const Main: React.FC<Props> = ({ country }) => {
-  const [newsData, setNewsData] = useState([]);
+export const Main = () => {
+  const dispatch = useDispatch();
+  const { country } = useParams();
 
   useEffect(() => {
     const fetchNewsData = async () => {
       try {
         const response = await fetch(
-          `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=0f7b94d0d5e04f2ebd4412f1becf8d76`
+          `https://newsapi.org/v2/top-headlines?country=${
+            country || "pl"
+          }&apiKey=0f7b94d0d5e04f2ebd4412f1becf8d76`
         );
         const data = await response.json();
-        setNewsData(data.articles);
+        dispatch(load(data.articles));
       } catch (error) {
         console.error(error);
       }
@@ -27,17 +30,11 @@ export const Main: React.FC<Props> = ({ country }) => {
     fetchNewsData();
   }, [country]);
 
-  const [isGrid, setIsGrid] = useState<boolean>(false);
-
-  const handleToggleGrid = () => {
-    setIsGrid(!isGrid);
-  };
-
   return (
     <div className={styles.main}>
-      <Header onClick1={handleToggleGrid} />
-      <Body isGrid={isGrid} country={country} />
-      <Footer number={newsData.length} />
+      <Header />
+      <Body />
+      <Footer />
     </div>
   );
 };

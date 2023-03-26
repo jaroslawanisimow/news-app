@@ -14,7 +14,7 @@ import { ChinaFlag } from "../Countries/China";
 import { PolandFlag } from "../Countries/Poland";
 import { HongKongFlag } from "../Countries/HongKong";
 import { SingaporeFlag } from "../Countries/Singapore";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
@@ -60,10 +60,9 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 type Props = {
-  onSelectCountry: (country: string) => void;
 };
 
-export const SideMenu: React.FC<Props> = ({ onSelectCountry }) => {
+export const SideMenu: React.FC<Props> = () => {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
 
@@ -93,17 +92,16 @@ export const SideMenu: React.FC<Props> = ({ onSelectCountry }) => {
                 px: 2.5,
               }}
               onClick={() => {
-                onSelectCountry('pl');
                 navigate('/country/pl');
               }}
-            >
+              >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 3 : "auto",
                   justifyContent: "center",
                 }}
-              >
+                >
                 <PolandFlag />
               </ListItemIcon>
               <ListItemText primary="Poland" sx={{ opacity: open ? 1 : 0 }} />
@@ -117,7 +115,6 @@ export const SideMenu: React.FC<Props> = ({ onSelectCountry }) => {
                 px: 2.5,
               }}
               onClick={() => {
-                onSelectCountry('cn');
                 navigate('/country/cn');
               }}
             >
@@ -141,7 +138,6 @@ export const SideMenu: React.FC<Props> = ({ onSelectCountry }) => {
                 px: 2.5,
               }}
               onClick={() => {
-                onSelectCountry('sg');
                 navigate('/country/sg');
               }}
             >
@@ -165,7 +161,6 @@ export const SideMenu: React.FC<Props> = ({ onSelectCountry }) => {
                 px: 2.5,
               }}
               onClick={() => {
-                onSelectCountry('hk');
                 navigate('/country/hk');
               }}
             >
@@ -189,7 +184,6 @@ export const SideMenu: React.FC<Props> = ({ onSelectCountry }) => {
                 px: 2.5,
               }}
               onClick={() => {
-                onSelectCountry('ch');
                 navigate('/country/ch');
               }}
             >

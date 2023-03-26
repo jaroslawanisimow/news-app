@@ -5,15 +5,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { SideMenu } from "./components/SideMenu/SideMenu";
 
 function App() {
-  const [country, setCountry] = useState("pl");
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Main country={country} />} />
-        <Route path="/country/:country" element={<Main country={country} />} />
+        <Route path="/" element={<Main/>} />
+        <Route path="/country/:country" element={<Main />} />
       </Routes>
-      <SideMenu onSelectCountry={setCountry} />
+      <SideMenu  />
     </Router>
   );
 }

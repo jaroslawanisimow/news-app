@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import styles from "./styles.module.css";
+import { parseISO, format } from "date-fns";
 
 type NewsItem = {
   title: string;
@@ -7,11 +9,6 @@ type NewsItem = {
   publishedAt: string;
   urlToImage: string | null;
   description: string;
-};
-
-type Props = {
-  isGrid: boolean;
-  country: string;
 };
 
 const getCountryName = (countryCode: string): string => {
@@ -22,33 +19,15 @@ const getCountryName = (countryCode: string): string => {
     sg: "Singapore",
     hk: "HongKong",
   };
-
   return countryCodes[countryCode] || "Unknown";
 };
 
-export const Body: React.FC<Props> = ({ isGrid, country }) => {
-  const [newsData, setNewsData] = useState<NewsItem[]>([]);
-
-  useEffect(() => {
-    const fetchNewsData = async () => {
-      try {
-        const response = await fetch(
-          `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=0f7b94d0d5e04f2ebd4412f1becf8d76`
-        );
-        const data = await response.json();
-        const articles = data.articles.map((article: NewsItem) => {
-          const date = article.publishedAt.split("T")[0]; //
-          return { ...article, publishedAt: date };
-        });
-        setNewsData(articles);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchNewsData();
-  }, [country]);
-
-  const countryName = getCountryName(country);
+export const Body = () => {
+  const articles = useSelector((state: any) => state.articles.data);
+  const view = useSelector((state: any) => state.settings.view);
+  const { country } = useParams();
+  const countryName = getCountryName(country || "pl");
+  console.log(articles);
 
   return (
     <>
@@ -57,15 +36,19 @@ export const Body: React.FC<Props> = ({ isGrid, country }) => {
           Breaking News <p>{countryName}</p>
         </div>
         <div className={styles.line}></div>
-        <div className={`${styles.news} ${isGrid ? styles.grid : styles.list}`}>
-          {newsData.map((newsItem: NewsItem) => (
+        <div
+          className={`${styles.news} ${
+            view === "grid" ? styles.grid : styles.list
+          }`}
+        >
+          {articles.map((newsItem: NewsItem) => (
             <div className={styles.newsContainer} key={newsItem.title}>
               <div className={styles.nameTitle}>
                 <h2>{newsItem.title}</h2>
               </div>
               <div className={styles.p}>
                 <p>{newsItem.source.name}</p>
-                <p>{newsItem.publishedAt}</p>
+                <p>{format(parseISO(newsItem.publishedAt), "yyyy-MM-dd")}</p>
               </div>
             </div>
           ))}

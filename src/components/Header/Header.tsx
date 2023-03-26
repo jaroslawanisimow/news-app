@@ -13,15 +13,15 @@ import { Modal } from "antd";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
 import { LogoSvg } from "../Logo/Logo";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleView } from "../../settingsSlice";
 
-type Props = {
-  onClick1: () => void;
-};
 
-export default function Header({ onClick1 }: Props) {
+export default function Header() {
+  const dispatch = useDispatch();
+
   const [badgeCount, setBadgeCount] = React.useState(1);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const [isGrid, setIsGrid] = React.useState(true);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -30,40 +30,38 @@ export default function Header({ onClick1 }: Props) {
     setIsModalOpen(false);
   };
 
-  const toggleIcons = () => {
-    setIsGrid(!isGrid);
-    onClick1();
-  };
+  const view = useSelector((state: any) => {
+    return state.settings.view;
+  });
 
   return (
-    <Box
-      sx={{ position: "fixed", top: 0, width: "100%", zIndex: 10 }}
-    >
+    <Box sx={{ position: "fixed", top: 0, width: "100%", zIndex: 10 }}>
       <AppBar position="static">
         <Toolbar
           sx={{
-            margin: "5px",
-            // display: "flex",
-            // alignItems: "center",
-            // gap: "15px",
+            margin: "5px"
           }}
         >
           <Link to="/" className={styles.link}>
             <LogoSvg width={90} height={60} />
           </Link>
-          {isGrid ? (
+          {view === "grid" ? (
             <IconButton
               size="large"
               edge="start"
               color="inherit"
               aria-label="open drawer"
               sx={{ mr: 5 }}
-              onClick={() => {
-                toggleIcons();
-              }}
+              onClick={() => dispatch(toggleView())}
             >
-              <UnfoldMoreIcon sx={{ fontSize: "1.5rem" }} className={styles.icon} />
-              <FormatListBulletedIcon sx={{ fontSize: "2rem" }} className={styles.icon} />
+              <UnfoldMoreIcon
+                sx={{ fontSize: "1.5rem" }}
+                className={styles.icon}
+              />
+              <FormatListBulletedIcon
+                sx={{ fontSize: "2rem" }}
+                className={styles.icon}
+              />
             </IconButton>
           ) : (
             <IconButton
@@ -72,14 +70,12 @@ export default function Header({ onClick1 }: Props) {
               color="inherit"
               aria-label="open drawer"
               sx={{ mr: 5 }}
-              onClick={() => {
-                toggleIcons();
-              }}
-              // onClick={toggleIcons}
-              // onClick1();
-              // onClick={() => setIsGrid(!isGrid)}
+              onClick={() => dispatch(toggleView())}
             >
-              <UnfoldMoreIcon sx={{ fontSize: "1.5rem" }} className={styles.icon} />
+              <UnfoldMoreIcon
+                sx={{ fontSize: "1.5rem" }}
+                className={styles.icon}
+              />
               <GridViewIcon sx={{ fontSize: "2rem" }} className={styles.icon} />
             </IconButton>
           )}
@@ -97,7 +93,10 @@ export default function Header({ onClick1 }: Props) {
               color="inherit"
             >
               <Badge badgeContent={badgeCount} color="error">
-                <NotificationsIcon sx={{ fontSize: "2rem" }} className={styles.icon}/>
+                <NotificationsIcon
+                  sx={{ fontSize: "2rem" }}
+                  className={styles.icon}
+                />
               </Badge>
             </IconButton>
             <IconButton
@@ -107,7 +106,10 @@ export default function Header({ onClick1 }: Props) {
               aria-haspopup="true"
               color="inherit"
             >
-              <TranslateIcon sx={{ fontSize: "2rem" }} className={styles.icon}/>
+              <TranslateIcon
+                sx={{ fontSize: "2rem" }}
+                className={styles.icon}
+              />
             </IconButton>
           </Box>
         </Toolbar>
@@ -117,7 +119,7 @@ export default function Header({ onClick1 }: Props) {
         open={isModalOpen}
         onOk={handleOk}
         closable={false}
-        cancelButtonProps={{ style: { display: "none" } } }
+        cancelButtonProps={{ style: { display: "none" } }}
       >
         <p>
           "NewsTs" app was created using TypeScript, React, Redux , and,
