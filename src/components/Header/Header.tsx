@@ -37,19 +37,19 @@ export default function Header({ onClick1 }: Props) {
 
   return (
     <Box
-      sx={{ flexGrow: 1, position: "fixed", top: 0, width: "100%", zIndex: 10 }}
+      sx={{ position: "fixed", top: 0, width: "100%", zIndex: 10 }}
     >
       <AppBar position="static">
         <Toolbar
           sx={{
             margin: "5px",
-            display: "flex",
-            alignItems: "center",
-            gap: "15px",
+            // display: "flex",
+            // alignItems: "center",
+            // gap: "15px",
           }}
         >
           <Link to="/" className={styles.link}>
-            <LogoSvg width={125} height={50} />
+            <LogoSvg width={90} height={60} />
           </Link>
           {isGrid ? (
             <IconButton
@@ -62,8 +62,8 @@ export default function Header({ onClick1 }: Props) {
                 toggleIcons();
               }}
             >
-              <UnfoldMoreIcon sx={{ fontSize: "1.5rem" }} />
-              <FormatListBulletedIcon sx={{ fontSize: "2rem" }} />
+              <UnfoldMoreIcon sx={{ fontSize: "1.5rem" }} className={styles.icon} />
+              <FormatListBulletedIcon sx={{ fontSize: "2rem" }} className={styles.icon} />
             </IconButton>
           ) : (
             <IconButton
@@ -79,8 +79,8 @@ export default function Header({ onClick1 }: Props) {
               // onClick1();
               // onClick={() => setIsGrid(!isGrid)}
             >
-              <UnfoldMoreIcon sx={{ fontSize: "1.5rem" }} />
-              <GridViewIcon sx={{ fontSize: "2rem" }} />
+              <UnfoldMoreIcon sx={{ fontSize: "1.5rem" }} className={styles.icon} />
+              <GridViewIcon sx={{ fontSize: "2rem" }} className={styles.icon} />
             </IconButton>
           )}
           <Box sx={{ flexGrow: 1 }} />
@@ -97,7 +97,7 @@ export default function Header({ onClick1 }: Props) {
               color="inherit"
             >
               <Badge badgeContent={badgeCount} color="error">
-                <NotificationsIcon sx={{ fontSize: "2rem" }} />
+                <NotificationsIcon sx={{ fontSize: "2rem" }} className={styles.icon}/>
               </Badge>
             </IconButton>
             <IconButton
@@ -107,19 +107,23 @@ export default function Header({ onClick1 }: Props) {
               aria-haspopup="true"
               color="inherit"
             >
-              <TranslateIcon sx={{ fontSize: "2rem" }} />
+              <TranslateIcon sx={{ fontSize: "2rem" }} className={styles.icon}/>
             </IconButton>
           </Box>
         </Toolbar>
       </AppBar>
       <Modal
-        title="Text"
+        title="Feedback"
         open={isModalOpen}
         onOk={handleOk}
         closable={false}
-        cancelButtonProps={{ style: { display: "none" } }}
+        cancelButtonProps={{ style: { display: "none" } } }
       >
-        <p>Some text...</p>
+        <p>
+          "NewsTs" app was created using TypeScript, React, Redux , and,
+          Testing, AntDesign, Material UI libraries, and, CSS modules.
+          Interesting mini-project to exercise programming skills.
+        </p>
       </Modal>
     </Box>
   );

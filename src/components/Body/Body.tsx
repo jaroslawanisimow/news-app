@@ -9,22 +9,31 @@ type NewsItem = {
   description: string;
 };
 
-
 type Props = {
   isGrid: boolean;
-  //   onClick1: () => void;
-  // newsData: NewsItem[];
+  country: string;
 };
 
-export const Body: React.FC<Props> = ({ isGrid }) => {
+const getCountryName = (countryCode: string): string => {
+  const countryCodes: { [key: string]: string } = {
+    pl: "Poland",
+    cn: "China",
+    ch: "Swiss",
+    sg: "Singapore",
+    hk: "HongKong",
+  };
+
+  return countryCodes[countryCode] || "Unknown";
+};
+
+export const Body: React.FC<Props> = ({ isGrid, country }) => {
   const [newsData, setNewsData] = useState<NewsItem[]>([]);
-  // const [isGrid, setIsGrid] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchNewsData = async () => {
       try {
         const response = await fetch(
-          "https://newsapi.org/v2/top-headlines?country=pl&apiKey=0f7b94d0d5e04f2ebd4412f1becf8d76"
+          `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=0f7b94d0d5e04f2ebd4412f1becf8d76`
         );
         const data = await response.json();
         const articles = data.articles.map((article: NewsItem) => {
@@ -37,12 +46,16 @@ export const Body: React.FC<Props> = ({ isGrid }) => {
       }
     };
     fetchNewsData();
-  }, []);
+  }, [country]);
+
+  const countryName = getCountryName(country);
 
   return (
     <>
       <div className={styles.main}>
-        <div className={styles.title}>News App : Poland</div>
+        <div className={styles.title}>
+          Breaking News <p>{countryName}</p>
+        </div>
         <div className={styles.line}></div>
         <div className={`${styles.news} ${isGrid ? styles.grid : styles.list}`}>
           {newsData.map((newsItem: NewsItem) => (
@@ -54,19 +67,24 @@ export const Body: React.FC<Props> = ({ isGrid }) => {
                 <p>{newsItem.source.name}</p>
                 <p>{newsItem.publishedAt}</p>
               </div>
-              {/* {newsItem.urlToImage && (
-                <img src={newsItem.urlToImage} alt="thumbnail" />
-              )} */}
-              {/* <p>{newsItem.description}</p> */}
             </div>
           ))}
         </div>
-        {/* <button onClick={() => setIsGrid(!isGrid)} className={styles.button}>
-          Toggle
-        </button> */}
       </div>
     </>
   );
 };
 
-export default Body;
+// {
+//   /* {newsItem.urlToImage && (
+//                 <img src={newsItem.urlToImage} alt="thumbnail" />
+//               )} */
+// }
+// {
+//   /* <p>{newsItem.description}</p> */
+// }
+// {
+//   /* <button onClick={() => setIsGrid(!isGrid)} className={styles.button}>
+//           Toggle
+//         </button> */
+// }
