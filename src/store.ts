@@ -1,6 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import articleSlice from "./articleSlice";
-// import settingsSlice from "./settingsSlice";
 import articles from "./articleSlice";
 import settings from "./settingsSlice";
 

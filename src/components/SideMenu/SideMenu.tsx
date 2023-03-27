@@ -14,9 +14,7 @@ import { ChinaFlag } from "../Countries/China";
 import { PolandFlag } from "../Countries/Poland";
 import { HongKongFlag } from "../Countries/HongKong";
 import { SingaporeFlag } from "../Countries/Singapore";
-import { Link, useNavigate } from 'react-router-dom';
-
-
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -59,12 +57,12 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-type Props = {
-};
+type Props = {};
 
 export const SideMenu: React.FC<Props> = () => {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
+  const [selectedCountry, setSelectedCountry] = React.useState("pl");
 
   const handleMouseEnter = () => {
     setOpen(true);
@@ -90,18 +88,26 @@ export const SideMenu: React.FC<Props> = () => {
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
+                backgroundColor:
+                  selectedCountry === "pl"
+                    ? "rgba(0, 0, 0, 0.08)"
+                    : "transparent",
+                "&:hover": {
+                  backgroundColor: "rgba(0, 0, 0, 0.08)",
+                },
               }}
               onClick={() => {
-                navigate('/country/pl');
+                setSelectedCountry("pl");
+                navigate("/country/pl");
               }}
-              >
+            >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 3 : "auto",
                   justifyContent: "center",
                 }}
-                >
+              >
                 <PolandFlag />
               </ListItemIcon>
               <ListItemText primary="Poland" sx={{ opacity: open ? 1 : 0 }} />
@@ -113,9 +119,17 @@ export const SideMenu: React.FC<Props> = () => {
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
+                backgroundColor:
+                  selectedCountry === "cn"
+                    ? "rgba(0, 0, 0, 0.08)"
+                    : "transparent",
+                "&:hover": {
+                  backgroundColor: "rgba(0, 0, 0, 0.08)",
+                },
               }}
               onClick={() => {
-                navigate('/country/cn');
+                setSelectedCountry("cn");
+                navigate("/country/cn");
               }}
             >
               <ListItemIcon
@@ -136,9 +150,17 @@ export const SideMenu: React.FC<Props> = () => {
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
+                backgroundColor:
+                  selectedCountry === "sg"
+                    ? "rgba(0, 0, 0, 0.08)"
+                    : "transparent",
+                "&:hover": {
+                  backgroundColor: "rgba(0, 0, 0, 0.08)",
+                },
               }}
               onClick={() => {
-                navigate('/country/sg');
+                setSelectedCountry("sg");
+                navigate("/country/sg");
               }}
             >
               <ListItemIcon
@@ -150,7 +172,10 @@ export const SideMenu: React.FC<Props> = () => {
               >
                 <SingaporeFlag />
               </ListItemIcon>
-              <ListItemText primary="Singapore" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+                primary="Singapore"
+                sx={{ opacity: open ? 1 : 0 }}
+              />
             </ListItemButton>
           </ListItem>
           <ListItem key="HongKong" disablePadding sx={{ display: "block" }}>
@@ -159,9 +184,17 @@ export const SideMenu: React.FC<Props> = () => {
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
+                backgroundColor:
+                  selectedCountry === "hk"
+                    ? "rgba(0, 0, 0, 0.08)"
+                    : "transparent",
+                "&:hover": {
+                  backgroundColor: "rgba(0, 0, 0, 0.08)",
+                },
               }}
               onClick={() => {
-                navigate('/country/hk');
+                setSelectedCountry("hk");
+                navigate("/country/hk");
               }}
             >
               <ListItemIcon
@@ -182,9 +215,17 @@ export const SideMenu: React.FC<Props> = () => {
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
+                backgroundColor:
+                  selectedCountry === "ch"
+                    ? "rgba(0, 0, 0, 0.08)"
+                    : "transparent",
+                "&:hover": {
+                  backgroundColor: "rgba(0, 0, 0, 0.08)",
+                },
               }}
               onClick={() => {
-                navigate('/country/ch');
+                setSelectedCountry("ch");
+                navigate("/country/ch");
               }}
             >
               <ListItemIcon
