@@ -1,5 +1,6 @@
 News app based on https://newsapi.org/ API.
-Created using TypeScript, React, CSS , AntDesign, MaterialUI, Google Translate API and Redux toolkit libraries.
+Created using TypeScript, React, CSS , AntDesign, MaterialUI, Google Translate API, React-testing and Redux-toolkit libraries.
+The app has all the mentioned in instruction tasks including translate feature and RWD on mobile and desktop devices.
 
 https://news-app-seven-vert.vercel.app/
 
