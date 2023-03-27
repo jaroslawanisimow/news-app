@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
 import styles from "./styles.module.css";
 
 import Header from "../../components/Header/Header";
 import { Body } from "../../components/Body/Body";
 import { Footer } from "../../components/Footer/Footer";
-import { useParams } from "react-router-dom";
-import { load } from "../../articleSlice";
 
+import { load } from "../../articleSlice";
 import { useDispatch } from "react-redux";
+
+import { useParams } from "react-router-dom";
 
 export const Main = () => {
   const dispatch = useDispatch();
@@ -28,12 +30,18 @@ export const Main = () => {
       }
     };
     fetchNewsData();
-  }, [country]);
+  },);
+
+  const [translationLanguage, setTranslationLanguage] = useState("");
+
+  const handleTranslateClick = () => {
+    setTranslationLanguage((e) => (e ? "" : "pl")); 
+  };
 
   return (
     <div className={styles.main}>
-      <Header />
-      <Body />
+      <Header onTranslateClick={handleTranslateClick} />
+      <Body translationLanguage={translationLanguage} />
       <Footer />
     </div>
   );

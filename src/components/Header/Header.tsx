@@ -8,16 +8,20 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import GridViewIcon from "@mui/icons-material/GridView";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
-import TranslateIcon from "@mui/icons-material/Translate";
+import { IconTranslate } from "./IconTranslate";
 import { Modal } from "antd";
 import { Link } from "react-router-dom";
-import styles from "./styles.module.css";
 import { LogoSvg } from "../Logo/Logo";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleView } from "../../settingsSlice";
 
+import styles from "./styles.module.css";
 
-export default function Header() {
+type Props = {
+  onTranslateClick: () => void;
+};
+
+export default function Header({ onTranslateClick }: Props) {
   const dispatch = useDispatch();
 
   const [badgeCount, setBadgeCount] = React.useState(1);
@@ -39,46 +43,35 @@ export default function Header() {
       <AppBar position="static">
         <Toolbar
           sx={{
-            margin: "5px"
+            paddingLeft: "5px",
+            paddingRight: "5px",
+            margin: "5px",
           }}
         >
           <Link to="/" className={styles.link}>
-            <LogoSvg width={90} height={60} />
+            <LogoSvg width={100} height={60} />
           </Link>
-          {view === "grid" ? (
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 5 }}
-              onClick={() => dispatch(toggleView())}
-            >
-              <UnfoldMoreIcon
-                sx={{ fontSize: "1.5rem" }}
-                className={styles.icon}
-              />
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ mr: 5 }}
+            onClick={() => dispatch(toggleView())}
+          >
+            <UnfoldMoreIcon
+              sx={{ fontSize: "1.5rem" }}
+              className={styles.icon}
+            />
+            {view === "grid" ? (
               <FormatListBulletedIcon
                 sx={{ fontSize: "2rem" }}
                 className={styles.icon}
               />
-            </IconButton>
-          ) : (
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 5 }}
-              onClick={() => dispatch(toggleView())}
-            >
-              <UnfoldMoreIcon
-                sx={{ fontSize: "1.5rem" }}
-                className={styles.icon}
-              />
+            ) : (
               <GridViewIcon sx={{ fontSize: "2rem" }} className={styles.icon} />
-            </IconButton>
-          )}
+            )}
+          </IconButton>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: "flex", alignItems: "center", gap: "25px" }}>
             <IconButton
@@ -105,11 +98,9 @@ export default function Header() {
               aria-label="account of current user"
               aria-haspopup="true"
               color="inherit"
+              onClick={onTranslateClick}
             >
-              <TranslateIcon
-                sx={{ fontSize: "2rem" }}
-                className={styles.icon}
-              />
+              <IconTranslate />
             </IconButton>
           </Box>
         </Toolbar>
@@ -122,9 +113,11 @@ export default function Header() {
         cancelButtonProps={{ style: { display: "none" } }}
       >
         <p>
-          "NewsTs" app was created using TypeScript, React, Redux , and,
-          Testing, AntDesign, Material UI libraries, and, CSS modules.
-          Interesting mini-project to exercise programming skills.
+          "NewsTs" app was created using TypeScript, React, Redux toolkit, and,
+          Testing React Library, AntDesign, Material UI , Date fns libraries,
+          and, CSS modules. Interesting mini-project to exercise programming
+          skills. It was also interesting to try to implement Google Translate
+          API for the first time.
         </p>
       </Modal>
     </Box>

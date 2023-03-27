@@ -2,6 +2,9 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styles from "./styles.module.css";
 import { parseISO, format } from "date-fns";
+import translateText from '../../services/translateService';
+import { useEffect, useState } from "react";
+
 
 type NewsItem = {
   title: string;
@@ -9,6 +12,10 @@ type NewsItem = {
   publishedAt: string;
   urlToImage: string | null;
   description: string;
+};
+
+type Props = {
+  translationLanguage: string;
 };
 
 const getCountryName = (countryCode: string): string => {
@@ -22,18 +29,41 @@ const getCountryName = (countryCode: string): string => {
   return countryCodes[countryCode] || "Unknown";
 };
 
-export const Body = () => {
+export const Body = ({ translationLanguage }: Props) => {
   const articles = useSelector((state: any) => state.articles.data);
   const view = useSelector((state: any) => state.settings.view);
   const { country } = useParams();
   const countryName = getCountryName(country || "pl");
-  console.log(articles);
+  const [translatedArticles, setTranslatedArticles] = useState(articles);
+
+
+  useEffect(() => {
+    const translateArticles = async () => {
+      if (translationLanguage) {
+        const newTranslatedArticles = await Promise.all(
+          articles.map(async (newsItem: NewsItem) => {
+            const translatedTitle = await translateText(newsItem.title, translationLanguage);
+            return {
+              ...newsItem,
+              title: translatedTitle || newsItem.title,
+            };
+          })
+        );
+        setTranslatedArticles(newTranslatedArticles);
+      } else {
+        setTranslatedArticles(articles);
+      }
+    };
+
+    translateArticles();
+  }, [articles, translationLanguage]);
+
 
   return (
     <>
       <div className={styles.main}>
         <div className={styles.title}>
-          Breaking News <p>{countryName}</p>
+        Najświeższe Wiadomości <p>{countryName}</p>
         </div>
         <div className={styles.line}></div>
         <div
@@ -41,7 +71,7 @@ export const Body = () => {
             view === "grid" ? styles.grid : styles.list
           }`}
         >
-          {articles.map((newsItem: NewsItem) => (
+          {translatedArticles.map((newsItem: NewsItem) => (
             <div className={styles.newsContainer} key={newsItem.title}>
               <div className={styles.nameTitle}>
                 <h2>{newsItem.title}</h2>
@@ -58,16 +88,4 @@ export const Body = () => {
   );
 };
 
-// {
-//   /* {newsItem.urlToImage && (
-//                 <img src={newsItem.urlToImage} alt="thumbnail" />
-//               )} */
-// }
-// {
-//   /* <p>{newsItem.description}</p> */
-// }
-// {
-//   /* <button onClick={() => setIsGrid(!isGrid)} className={styles.button}>
-//           Toggle
-//         </button> */
-// }
+
