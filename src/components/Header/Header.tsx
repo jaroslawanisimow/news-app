@@ -3,7 +3,6 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Badge from "@mui/material/Badge";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
@@ -13,8 +12,13 @@ import TranslateIcon from "@mui/icons-material/Translate";
 import { Modal } from "antd";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
+import { LogoSvg } from "../Logo/Logo";
 
-export default function Header() {
+type Props = {
+  onClick1: () => void;
+};
+
+export default function Header({ onClick1 }: Props) {
   const [badgeCount, setBadgeCount] = React.useState(1);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isGrid, setIsGrid] = React.useState(true);
@@ -28,21 +32,24 @@ export default function Header() {
 
   const toggleIcons = () => {
     setIsGrid(!isGrid);
+    onClick1();
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box
+      sx={{ flexGrow: 1, position: "fixed", top: 0, width: "100%", zIndex: 10 }}
+    >
       <AppBar position="static">
-        <Toolbar sx={{ margin: "0 5px" }}>
+        <Toolbar
+          sx={{
+            margin: "5px",
+            display: "flex",
+            alignItems: "center",
+            gap: "15px",
+          }}
+        >
           <Link to="/" className={styles.link}>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: "block", margin: "0 25px 0 0" }}
-            >
-              NewsApp.tsx
-            </Typography>
+            <LogoSvg width={125} height={50} />
           </Link>
           {isGrid ? (
             <IconButton
@@ -51,10 +58,12 @@ export default function Header() {
               color="inherit"
               aria-label="open drawer"
               sx={{ mr: 5 }}
-              onClick={toggleIcons}
+              onClick={() => {
+                toggleIcons();
+              }}
             >
-              <GridViewIcon />
-              <UnfoldMoreIcon />
+              <UnfoldMoreIcon sx={{ fontSize: "1.5rem" }} />
+              <FormatListBulletedIcon sx={{ fontSize: "2rem" }} />
             </IconButton>
           ) : (
             <IconButton
@@ -63,10 +72,15 @@ export default function Header() {
               color="inherit"
               aria-label="open drawer"
               sx={{ mr: 5 }}
-              onClick={toggleIcons}
+              onClick={() => {
+                toggleIcons();
+              }}
+              // onClick={toggleIcons}
+              // onClick1();
+              // onClick={() => setIsGrid(!isGrid)}
             >
-              <FormatListBulletedIcon />
-              <UnfoldMoreIcon />
+              <UnfoldMoreIcon sx={{ fontSize: "1.5rem" }} />
+              <GridViewIcon sx={{ fontSize: "2rem" }} />
             </IconButton>
           )}
           <Box sx={{ flexGrow: 1 }} />
@@ -83,7 +97,7 @@ export default function Header() {
               color="inherit"
             >
               <Badge badgeContent={badgeCount} color="error">
-                <NotificationsIcon />
+                <NotificationsIcon sx={{ fontSize: "2rem" }} />
               </Badge>
             </IconButton>
             <IconButton
@@ -93,7 +107,7 @@ export default function Header() {
               aria-haspopup="true"
               color="inherit"
             >
-              <TranslateIcon />
+              <TranslateIcon sx={{ fontSize: "2rem" }} />
             </IconButton>
           </Box>
         </Toolbar>
