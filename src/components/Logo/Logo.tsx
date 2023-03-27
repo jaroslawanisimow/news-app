@@ -23,7 +23,7 @@ export const LogoSvg: FC<LogoSvgProps> = ({ width, height }) => {
         stroke="#3874CB"
         stroke-width="15"
       />
-      <rect
+      <rect 
         x="7.5"
         y="7.5"
         width="281"

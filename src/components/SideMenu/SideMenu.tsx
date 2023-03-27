@@ -1,5 +1,5 @@
 import * as React from "react";
-import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
+import { styled, Theme, CSSObject } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -9,8 +9,14 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import { SwissFlag } from "../Countries/Swiss";
+import { ChinaFlag } from "../Countries/China";
+import { PolandFlag } from "../Countries/Poland";
+import { HongKongFlag } from "../Countries/HongKong";
+import { SingaporeFlag } from "../Countries/Singapore";
+import { Link, useNavigate } from 'react-router-dom';
+
+
 
 const drawerWidth = 240;
 
@@ -35,7 +41,6 @@ const closedMixin = (theme: Theme): CSSObject => ({
   },
 });
 
-
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -43,7 +48,7 @@ const Drawer = styled(MuiDrawer, {
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
-  zIndex: 1, 
+  zIndex: 1,
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),
@@ -54,40 +59,11 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-// Drawer overlay the content ? 
+type Props = {
+};
 
-// const Drawer = styled(MuiDrawer, {
-//   shouldForwardProp: (prop) => prop !== "open",
-// })(({ theme, open }) => ({
-//   width: drawerWidth,
-//   flexShrink: 0,
-//   whiteSpace: "nowrap",
-//   boxSizing: "border-box",
-//   ...(open && {
-//     ...openedMixin(theme),
-//     "& .MuiDrawer-paper": openedMixin(theme),
-//   }),
-//   ...(!open && {
-//     ...closedMixin(theme),
-//     "& .MuiDrawer-paper": closedMixin(theme),
-//   }),
-//   "& .MuiPaper-root": {
-//     position: "relative",
-//     backgroundColor: "transparent",
-//     overflow: "visible",
-//   },
-//   "&:hover": {
-//     ...openedMixin(theme),
-//     "& .MuiDrawer-paper": openedMixin(theme),
-//   },
-//   "&:hover .MuiPaper-root": {
-//     backgroundColor: theme.palette.grey[300],
-//     zIndex: -1,
-//   },
-// }));
-
-export const SideMenu = () => {
-  // const theme = useTheme();
+export const SideMenu: React.FC<Props> = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
 
   const handleMouseEnter = () => {
@@ -99,33 +75,130 @@ export const SideMenu = () => {
   };
 
   return (
-    <Box sx={{ display: "flex" }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <Box
+      sx={{ display: "flex" }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <CssBaseline />
       <Drawer variant="permanent" open={open}>
         <Divider />
-        <List sx={{ display: "block" , marginTop: "70px" }}>
-          {["Country", "Country", "Country", "Country"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
+        <List sx={{ display: "block", marginTop: "70px" }}>
+          <ListItem key="Poland" disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+              onClick={() => {
+                navigate('/country/pl');
+              }}
+              >
+              <ListItemIcon
                 sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+                >
+                <PolandFlag />
+              </ListItemIcon>
+              <ListItemText primary="Poland" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key="China" disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+              onClick={() => {
+                navigate('/country/cn');
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
                 }}
               >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+                <ChinaFlag />
+              </ListItemIcon>
+              <ListItemText primary="China" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key="Singapore" disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+              onClick={() => {
+                navigate('/country/sg');
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <SingaporeFlag />
+              </ListItemIcon>
+              <ListItemText primary="Singapore" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key="HongKong" disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+              onClick={() => {
+                navigate('/country/hk');
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <HongKongFlag />
+              </ListItemIcon>
+              <ListItemText primary="HongKong" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key="Swiss" disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+              onClick={() => {
+                navigate('/country/ch');
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <SwissFlag />
+              </ListItemIcon>
+              <ListItemText primary="Swiss" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
         </List>
       </Drawer>
     </Box>
