@@ -2,7 +2,7 @@ const translateText = async (
   text: string,
   targetLanguage: string
 ): Promise<string | undefined> => {
-  const apiKey = "AIzaSyD0ySTupqHGbm0HXId9m4VB50d3jD1Yn-U";
+  const apiKey = "(ask for apikey the owner)";
   const url = `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`;
   const data = {
     q: text,
